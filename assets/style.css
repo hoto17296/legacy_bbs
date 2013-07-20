@@ -1,0 +1,122 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #666;
+}
+
+#container {
+  width: 640px;
+  margin: 0 auto;
+}
+
+#header {
+  height: 88px;
+  background: url(header_back.gif) repeat-x;
+}
+
+#header h1 {
+  margin: 0;
+  line-height: 88px;
+  font-size: 40px;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  text-align: center;
+}
+
+#contents {
+  padding: 10px 20px;
+  max-height: 600px;
+  overflow: auto;
+  background: #fff url(back.png) repeat-y fixed center top;
+}
+
+#contents ul {
+  margin: 0;
+  padding: 0;
+}
+
+#contents li {
+  position: relative;
+  margin: 10px 0;
+  padding-left: 80px;
+  list-style-type: none;
+}
+
+#contents li .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#contents li .name {
+  padding-left: 16px;
+  font-size: 18px;
+  line-height: 18px;
+  color: #fff;
+}
+
+#contents li .fukidashi {
+
+}
+
+#contents li .time {
+  position: absolute;
+  bottom: 20px;
+  left: 520px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.fukidashi {
+  width: 431px;
+}
+
+.fukidashi .fukidashi_top {
+  height: 37px;
+  background: url(fukidashi_top.png);
+}
+
+.fukidashi .fukidashi_bottom {
+  height: 36px;
+  background: url(fukidashi_bottom.png);
+}
+
+.fukidashi .value {
+  font-size: 30px;
+  padding: 0 30px 0 40px;
+  background: url(fukidashi_middle.png) repeat-y;
+}
+
+#footer {
+  padding: 12px;
+  height: 80px;
+  background: url(footer_back.gif) repeat-x;
+}
+
+#footer #select_icon {
+  height: 56px;
+  width: 54px;
+  border: 0;
+  vertical-align: middle;
+  background: url(icon.gif);
+}
+
+#footer #value_form {
+  margin: 0 6px;
+  padding: 0 12px;
+  height: 56px;
+  width: 420px;
+  border: 0;
+  vertical-align: middle;
+  background: url(value.gif) top;
+  font-size: 30px;
+}
+
+#footer input[type='submit'] {
+  color: transparent;
+  height: 56px;
+  width: 94px;
+  border: 0;
+  background: url(submit.gif);
+}
