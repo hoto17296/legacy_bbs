@@ -2,5 +2,8 @@
 
 print "Content-Type: text/html\n\n";
 
-print "Hello GX!<br/>";
-print "Hello GX!";
+print << "EOM";
+Hello GX!<br/>
+Hello GX!
+EOM
+
