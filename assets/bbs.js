@@ -4,10 +4,16 @@ window.onload = function(){
   if (username) document.post.name.value = username; 
 }
 
-function username(){
+function change_name(){
   var username = window.prompt("名前を入力しようか", document.post.name.value);
   if (username){
-    document.post.name.value = username;
-    setCookie('username', username, 30);
+    if (username.length > 15){
+      window.alert('名前は15文字以内で( ´ー｀)');
+      change_name();
+    }
+    else {
+      document.post.name.value = username;
+      setCookie('username', username, 30);
+    }
   }
 }

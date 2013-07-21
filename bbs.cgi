@@ -71,7 +71,9 @@ sub insert_post {
 
 sub validation {
   %post = @_;
-  if ($post{'value'}){
+  if ( $post{'value'}
+    && length($post{'value'}) <= 140
+    && length($post{'name'}) <= 15 ){
     return 1;
   }
   else {
