@@ -60,10 +60,22 @@ sub insert_post {
     'value' => &sanitize($cgi->param('value')),
     'icon'  => &sanitize($cgi->param('icon'))
   );
-  open(FP, ">>", $log_file) or die("error :$!");
-  flock(FP, LOCK_EX);
-  print FP "$post{'time'}\t$post{'name'}\t$post{'value'}\t$post{'icon'}\n";
-  close FP;
+  if (&validation(%post)){
+    open(FP, ">>", $log_file) or die("error :$!");
+    flock(FP, LOCK_EX);
+    print FP "$post{'time'}\t$post{'name'}\t$post{'value'}\t$post{'icon'}\n";
+    close FP;
+  }
+}
+
+sub validation {
+  %post = @_;
+  if ($post{'value'}){
+    return 1;
+  }
+  else {
+    return 0;
+  }
 }
 
 sub sanitize {
