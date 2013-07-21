@@ -18,11 +18,11 @@ my $header_file = $layout_dir . "header.html";
 my $footer_file = $layout_dir . "footer.html";
 my $post_file   = $layout_dir . "post.html";
 
-# ヘッダーを表示
-print &load_file($header_file);
-
 # 投稿
 &insert_post() if ($ENV{'REQUEST_METHOD'} eq 'POST');
+
+# ヘッダーを表示
+print &load_file($header_file);
 
 # 投稿を表示
 our $post_format = &load_file($post_file);
@@ -66,6 +66,7 @@ sub insert_post {
     print FP "$post{'time'}\t$post{'name'}\t$post{'value'}\t$post{'icon'}\n";
     close FP;
   }
+  print $cgi->redirect('bbs.cgi');
 }
 
 sub validation {
