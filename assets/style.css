@@ -2,15 +2,19 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #666;
+  background: #666 url(body_back.png) repeat-y center;
 }
 
 #container {
+  position: relative;
   width: 640px;
   margin: 0 auto;
 }
 
 #header {
+  position: fixed;
+  z-index: 5;
+  width: 640px;
   height: 88px;
   background: url(header_back.gif) repeat-x;
 }
@@ -25,10 +29,8 @@ body {
 }
 
 #contents {
-  padding: 10px 20px;
-  max-height: 600px;
-  overflow: auto;
-  background: #fff url(back.png) repeat-y fixed center top;
+  padding: 98px 20px 90px;
+  background: #fff url(contents_back.jpg) repeat-y fixed center top;
 }
 
 #contents ul {
@@ -89,8 +91,12 @@ body {
 }
 
 #footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+  width: 616px;
   padding: 12px;
-  height: 80px;
+  height: 56px;
   background: url(footer_back.gif) repeat-x;
 }
 
