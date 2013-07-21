@@ -1,11 +1,9 @@
 #!/usr/bin/perl
 
-use Data::Dumper;
 use DateTime;
 use CGI;
 
 # 設定色々
-
 our $log_file = "log.dat";
 
 my $layout_dir = "layout/";
