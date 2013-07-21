@@ -3,6 +3,7 @@
 use Data::Dumper;
 use DateTime;
 use CGI;
+#use CGI::Session;
 
 # 設定色々
 
@@ -55,8 +56,7 @@ sub insert_post {
   my $cgi = new CGI;
   %post = (
     'time'  => time(),
-    #'name'  => $cgi->param('name'),
-    'name'  => '名無しさん',
+    'name'  => &sanitize($cgi->param('name')),
     'value' => &sanitize($cgi->param('value')),
     'icon'  => &sanitize($cgi->param('icon'))
   );
