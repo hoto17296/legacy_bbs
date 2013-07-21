@@ -1,9 +1,12 @@
 #!/usr/bin/perl
 
+use Data::Dumper;
 use DateTime;
+use CGI;
 
 # 設定色々
-my $log_file = "log.dat";
+
+our $log_file = "log.dat";
 
 my $layout_dir = "layout/";
 my $asset_dir  = "assets/";
@@ -18,26 +21,65 @@ my $post_file   = $layout_dir . "post.html";
 # ヘッダーを表示
 print &load_file($header_file);
 
+# 投稿
+&insert_post() if ($ENV{'REQUEST_METHOD'} eq 'POST');
+
 # 投稿を表示
-my $format = &load_file($post_file);
-open(my $fp, "<", $log_file) or die "Cannot open $file: $!";
-while(my $post = readline $fp){
-  chomp $post;
-  my ($time,$name,$value,$icon) = split(/\t+/, $post);
-  my $dt = DateTime->from_epoch( time_zone => 'Asia/Tokyo', epoch => $time );
-  $icon = $default_icon unless ($icon);
-  printf($format, $icon_dir.$icon, $name, $value, $dt->strftime("%H:%M"));
+our $post_format = &load_file($post_file);
+open(FP, "<", $log_file) or die "Cannot open $file: $!";
+while(my $post = readline FP){
+  &show_post($post);
 }
-close $fp;
+close FP;
 
 # フッターを表示
 print &load_file($footer_file);
 
-
 sub load_file {
   $file = $_[0];
-  open(IN, "< $file");
-  read (IN, $buffer, (-s $file));
-  close IN;
+  open(FP, "<", $file);
+  read (FP, $buffer, (-s $file));
+  close FP;
   return $buffer;
+}
+
+sub show_post {
+  chomp $_[0];
+  my ($time,$name,$value,$icon) = split(/\t+/, $_[0]);
+  my $dt = DateTime->from_epoch( time_zone => 'Asia/Tokyo', epoch => $time );
+  $icon = $default_icon unless ($icon);
+  printf($post_format, $icon_dir.$icon, $name, $value, $dt->strftime("%H:%M"));
+}
+
+sub insert_post {
+  my $cgi = new CGI;
+  %post = (
+    'time'  => time(),
+    #'name'  => $cgi->param('name'),
+    'name'  => '名無しさん',
+    'value' => &sanitize($cgi->param('value')),
+    'icon'  => &sanitize($cgi->param('icon'))
+  );
+  open(FP, ">>", $log_file) or die("error :$!");
+  flock(FP, LOCK_EX);
+  print FP "$post{'time'}\t$post{'name'}\t$post{'value'}\t$post{'icon'}\n";
+  close FP;
+}
+
+sub sanitize {
+  $str = $_[0];
+  my %table = (
+    '&'    => '&amp;',
+    '<'    => '&lt;',
+    '>'    => '&gt;',
+    '"'    => '&quot;',
+    "'"    => '&#39;',
+    "\r\n" => '<br/>',
+    "\n"   => '<br/>',
+    "\r"   => '<br/>',
+    "\t"   => ' '
+  );
+  my $regex = join '', '([', keys(%table), '])';
+  $str =~ s/$regex/$table{$1}/go;
+  return $str;
 }
